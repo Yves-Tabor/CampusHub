@@ -5,9 +5,7 @@ const { createPost, updatePost, likePost, deletePost } = require("./../controlle
 
 router.post("/", auth, createPost)
 router.put("/:id", auth, updatePost)
-route.patch("/:id/like", auth, likePost)
-route.delete("/:id", auth, deletePost)
+router.patch("/:id/like", auth, likePost)
+router.delete("/:id", auth, deletePost)
 
 module.exports = router;
-
-

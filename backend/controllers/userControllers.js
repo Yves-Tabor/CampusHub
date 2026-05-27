@@ -1,10 +1,11 @@
 const User = require("./../models/User");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const emitter = require("./../events/logger");
 
 exports.registerUser = async (req, res) => {
   const { username, email, password } = req.body;
-  const hashedPass = await bcrypt.hash(password, 10);
+  const hashedPassword = await bcrypt.hash(password, 10);
 
   const user = await User.create({
     username,
@@ -13,6 +14,7 @@ exports.registerUser = async (req, res) => {
   });
 
   res.json(user);
+  emitter.emit("userRegistered", username);
 };
 
 exports.loginUser = async (req, res) => {
