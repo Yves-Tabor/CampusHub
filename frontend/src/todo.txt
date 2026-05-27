@@ -1,0 +1,25 @@
+(Install frontend packages
+Create the folders/files
+Add the Axios service
+Build Register component
+Build Login component
+Test login/token storage
+Add posts functionality)
+
+(build clean auth pages,
+create navbar,
+connect Axios requests,
+store JWT,
+display posts beautifully,
+create protected frontend flows.)
+
+(Better UI with Tailwind
+React Router pages
+User profile
+File uploads with multer
+Comments system
+Logout feature
+Edit post feature
+Protected frontend routes
+Loading states
+Toast notifications)
