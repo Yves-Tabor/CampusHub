@@ -16,7 +16,7 @@ const Login = () => {
       const res = await API.post("/users/login", formData);
       localStorage.setItem("token", res.data.token);
       alert("Login successful");
-      navigate("/dashboard", {replace: true});
+      window.location.href = "/dashboard";
     } catch (err) {
       console.log(err.response.data);
     }
@@ -32,7 +32,9 @@ const Login = () => {
         className="text-[2rem] font-bold leading-none tracking-tight uppercase text-black mb-8"
         style={{ fontFamily: "'Fraunces', serif" }}
       >
-        Sign<br />In
+        Sign
+        <br />
+        In
       </h2>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-5">
@@ -72,7 +74,10 @@ const Login = () => {
 
       <p className="text-sm text-black/50 mt-6">
         Don't have an account?{" "}
-        <Link to="/register" className="text-black font-semibold border-b border-[#21CD9D]">
+        <Link
+          to="/register"
+          className="text-black font-semibold border-b border-[#21CD9D]"
+        >
           Register here
         </Link>
       </p>
