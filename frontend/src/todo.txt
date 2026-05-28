@@ -1,10 +1,3 @@
-(Install frontend packages
-Create the folders/files
-Add the Axios service
-Build Register component
-Build Login component
-Test login/token storage
-Add posts functionality)
 
 (build clean auth pages,
 create navbar,

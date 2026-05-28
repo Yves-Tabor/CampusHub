@@ -1,28 +1,28 @@
-import Register from "./components/Register";
-import Login from "./components/Login";
-import CreatePost from "./components/CreatePost";
-import Posts from "./components/Posts";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
+import Navbar from "./components/Navbar";
+
+import Home from "./pages/Home";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
+  const token = localStorage.getItem("token");
+
   return (
-    <>
-      <div className="bg-black text-white p-10">
-        <h1 className="text-5xl font-bold">CampusHub</h1>
-      </div>
-      <Register />
-
-      <hr />
-
-      <Login />
-
-      <hr />
-
-      <CreatePost />
-
-      <hr />
-
-      <Posts />
-    </>
+    <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route
+          path="/dashboard"
+          element={token ? <Dashboard /> : <Navigate to="/login" />}
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

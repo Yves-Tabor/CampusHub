@@ -1,34 +1,81 @@
-const User = require("./../models/User");
+const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const emitter = require("./../events/logger");
 
 exports.registerUser = async (req, res) => {
-  const { username, email, password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
+  try {
+    console.log(req.body);
 
-  const user = await User.create({
-    username,
-    email,
-    password: hashedPassword,
-  });
+    const { username, email, password } = req.body;
 
-  res.json(user);
-  emitter.emit("userRegistered", username);
+    if (!username || !email || !password) {
+      return res.status(400).json({
+        message: "All fields are required",
+      });
+    }
+
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      return res.status(400).json({
+        message: "User already exists",
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await User.create({
+      username,
+      email,
+      password: hashedPassword,
+    });
+
+    res.status(201).json({
+      message: "User registered successfully",
+      user,
+    });
+  } catch (err) {
+    console.log("REGISTER ERROR:");
+    console.log(err);
+
+    res.status(500).json({
+      message: err.message,
+    });
+  }
 };
 
 exports.loginUser = async (req, res) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email });
+  try {
+    const { email, password } = req.body;
 
-  if (!user) {
-    return res.status(400).json({ message: "User not found!!" });
-  }
-  const isValidPassword = await bcrypt.compare(password, user.password);
+    const user = await User.findOne({ email });
 
-  if (!isValidPassword) {
-    return res.status(400).json({ message: "Wrong password!!" });
+    if (!user) {
+      return res.status(400).json({
+        message: "User not found",
+      });
+    }
+
+    const validPassword = await bcrypt.compare(password, user.password);
+
+    if (!validPassword) {
+      return res.status(400).json({
+        message: "Invalid password",
+      });
+    }
+
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+
+    res.json({
+      token,
+    });
+  } catch (err) {
+    console.log(err);
+
+    res.status(500).json({
+      message: err.message,
+    });
   }
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-  res.json({ token });
 };
