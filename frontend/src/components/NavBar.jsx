@@ -28,7 +28,7 @@ const Navbar = () => {
             className="text-[1.35rem] font-bold tracking-tight text-[#f0ece3]"
             style={{ fontFamily: "'Fraunces', serif" }}
           >
-            Campus<span className="text-[#21CD9D]">Hub</span>
+            Campus<span className="text-black">Hub</span>
           </Link>
         </div>
 
@@ -41,7 +41,7 @@ const Navbar = () => {
               <Link to="/login" className={navLinkClass("/login")}>Login</Link>
               <Link
                 to="/register"
-                className="rounded-md bg-[#21CD9D] px-5 py-2 text-sm font-semibold text-[#2e3829] tracking-wide transition-all hover:bg-[#1ab989] hover:-translate-y-px"
+                className="rounded-sm bg-black px-5 py-2 text-sm font-semibold text-white tracking-wide transition-all hover:bg-black hover:-translate-y-px"
               >
                 Register
               </Link>
